@@ -86,8 +86,10 @@ namespace shiny {
     const Base base8("01234567");
     const Base base10("0123456789");
     const Base base16("0123456789abcdef");
+    const Base BASE16("0123456789ABCDEF");
     const Base& binary = base2;
     const Base& octal = base8;
     const Base& decimal = base10;
     const Base& hexadecimal = base16;
+    const Base& HEXADECIMAL = BASE16;
 }

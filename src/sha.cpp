@@ -7,7 +7,7 @@
 #include "../include/sha_functions.h"
 
 namespace shiny {
-        void SHA0::init(std::string str) {
+    void SHA0::init(std::string str) {
             size_t strSize = str.size() * 8;
             const size_t totalSize = (strSize + 1 + 64);
             const size_t paddingSize = (512 - (totalSize % 512)) % 512;
@@ -24,7 +24,7 @@ namespace shiny {
             blocks[blockSize - 1][14] = strSize >> 32;
             blocks[blockSize - 1][15] = strSize;
         };
-        void SHA0::compute() {
+    void SHA0::compute() {
             for(size_t i = 0; i < blocks.size(); i++) {
                 size_t j;
                 for(j = 16; j < 80; j++)
@@ -46,13 +46,13 @@ namespace shiny {
                     hashes[i][j] += i == 0 ? stateInitial[j] : hashes[i - 1][j];
             }
         }
-        std::array<uint32_t, 5> SHA0::getDisgest() const {
+    std::array<uint32_t, 5> SHA0::getDisgest() const {
             std::array<uint32_t, 5> r;
             for(int i = 0; i < 5; i++)
                 r[i] = hashes[hashes.size() - 1][i];
             return r;
         }
-        void SHA1::init(std::string str)
+    void SHA1::init(std::string str)
         {
             size_t strSize = str.size() * 8;
             const size_t totalSize = (strSize + 1 + 64);
@@ -70,7 +70,7 @@ namespace shiny {
             blocks[blockSize - 1][14] = strSize >> 32;
             blocks[blockSize - 1][15] = strSize;
         };
-        void SHA1::compute()
+    void SHA1::compute()
         {
             for(size_t i = 0; i < blocks.size(); i++)
             {
@@ -95,7 +95,7 @@ namespace shiny {
                     hashes[i][j] += i == 0 ? stateInitial[j] : hashes[i - 1][j];
             }
         }
-        std::array<uint32_t, 5> SHA1::getDisgest() const{
+    std::array<uint32_t, 5> SHA1::getDisgest() const{
             std::array<uint32_t, 5> r;
             for(int i = 0; i < 5; i++)
                 r[i] = hashes[hashes.size() - 1][i];

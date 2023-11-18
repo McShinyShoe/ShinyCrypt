@@ -7,10 +7,8 @@
 #include <string>
 #include <initializer_list>
 
-namespace shiny
-{
-    class Base
-    {
+namespace shiny {
+    class Base {
     private:
         std::unordered_map<size_t, char> charMap;
         std::unordered_map<char, size_t> numMap;

@@ -53,8 +53,7 @@ namespace shiny {
         void compute();
         std::array<uint32_t, 5> getDisgest() const;
     };
-    class SHA1
-    {
+    class SHA1 {
     public:
         inline static constexpr uint32_t stateInitial[5] = {
             0x67452301,
@@ -110,8 +109,7 @@ namespace shiny {
         void compute();
         std::array<uint32_t, 5> getDisgest() const;
     };
-    class SHA224
-    { 
+    class SHA224 { 
     public:
         static constexpr uint32_t stateInitial[8] = {
             0xc1059ed8,

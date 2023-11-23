@@ -31,6 +31,7 @@ test: all
 	$(TEST_DIR)/$@ $(str)
 
 $(LIB): build
+	mkdir -p $(BIN_DIR)
 	$(MAKE) -C $(BUILD_DIR) $(@:.a=)
 	mv $(BUILD_DIR)/lib$@ $(BIN_DIR)/
 

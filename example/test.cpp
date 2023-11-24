@@ -34,5 +34,13 @@ int main(int argc, const char* argv[])
         cout << hexadecimal.decodeN(h, 8);
     cout << endl;
 
+    SHA256 sha256;
+    sha256.init(str);
+    sha256.compute();
+    cout << "SHA256: ";
+    for(uint32_t h : sha256.getDisgest())
+        cout << hexadecimal.decodeN(h, 8);
+    cout << endl;
+
     return 0;
 }

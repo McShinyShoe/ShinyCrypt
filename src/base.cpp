@@ -7,7 +7,7 @@
 #include "../include/base.h"
 
 namespace shiny {
-    size_t Base::encode(const char& chr) const {
+    size_t Base::encode(char chr) const {
         if(numMap.find(chr) == numMap.end())
             return -1;
         return numMap.at(chr);
@@ -25,7 +25,7 @@ namespace shiny {
         return r;
     }
 
-    const char& Base::find(const size_t& index) const {
+    const char& Base::find(size_t index) const {
         if(charMap.find(index) == charMap.end())
             return EOF;
         return charMap.at(index);

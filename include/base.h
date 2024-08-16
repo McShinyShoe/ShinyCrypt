@@ -15,9 +15,9 @@ namespace shiny {
         
     public:
         inline size_t radix() const { return charMap.size(); }
-        size_t encode(const char& chr) const;
+        size_t encode(char chr) const;
         size_t encode(std::string str) const;
-        const char& find(const size_t& index) const;
+        const char& find(size_t index) const;
         std::string decode(size_t num) const;
         std::string decodeN(size_t num, size_t N) const;
 

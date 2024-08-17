@@ -16,6 +16,8 @@ namespace shiny {
         blocks.resize(blockSize);
         hashes.resize(blockSize);
 
+        for (auto &block : blocks) block.fill(0);
+
         int i;
         for (i = 0; i < str.size(); i++) blocks[i / 64][(i % 64) / 4] |= ((uint32_t)str[i]) << (8 * (3 - (i % 4)));
         blocks[i / 64][(i % 64) / 4] |= ((uint32_t)(1 << 7)) << (8 * (3 - (i % 4)));
@@ -56,6 +58,8 @@ namespace shiny {
         blocks.resize(blockSize);
         hashes.resize(blockSize);
 
+        for (auto &block : blocks) block.fill(0);
+
         int i;
         for (i = 0; i < str.size(); i++) blocks[i / 64][(i % 64) / 4] |= ((uint32_t)str[i]) << (8 * (3 - (i % 4)));
         blocks[i / 64][(i % 64) / 4] |= ((uint32_t)(1 << 7)) << (8 * (3 - (i % 4)));
@@ -95,6 +99,8 @@ namespace shiny {
 
         blocks.resize(blockSize);
         hashes.resize(blockSize);
+
+        for (auto &block : blocks) block.fill(0);
 
         int i;
         for (i = 0; i < str.size(); i++) blocks[i / 64][(i % 64) / 4] |= ((uint32_t)str[i]) << (8 * (3 - (i % 4)));
@@ -140,6 +146,8 @@ namespace shiny {
         blocks.resize(blockSize);
         hashes.resize(blockSize);
 
+        for (auto &block : blocks) block.fill(0);
+
         int i;
         for (i = 0; i < str.size(); i++) blocks[i / 64][(i % 64) / 4] |= ((uint32_t)str[i]) << (8 * (3 - (i % 4)));
         blocks[i / 64][(i % 64) / 4] |= ((uint32_t)(1 << 7)) << (8 * (3 - (i % 4)));
@@ -184,6 +192,8 @@ namespace shiny {
         blocks.resize(blockSize);
         hashes.resize(blockSize);
 
+        for (auto &block : blocks) block.fill(0);
+
         int i;
         for (i = 0; i < str.size(); i++) blocks[i / 128][(i % 128) / 8] |= ((uint64_t)str[i]) << (8 * (7 - (i % 8)));
         blocks[i / 128][(i % 128) / 8] |= ((uint64_t)(1 << 7)) << (8 * (7 - (i % 8)));
@@ -227,6 +237,8 @@ namespace shiny {
 
         blocks.resize(blockSize);
         hashes.resize(blockSize);
+
+        for (auto &block : blocks) block.fill(0);
 
         int i;
         for (i = 0; i < str.size(); i++) blocks[i / 128][(i % 128) / 8] |= ((uint64_t)str[i]) << (8 * (7 - (i % 8)));

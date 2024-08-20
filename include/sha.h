@@ -1,3 +1,7 @@
+#pragma once
+#ifndef SHINY_SHA_H
+#define SHINY_SHA_H
+
 #include <array>
 #include <cstdint>
 #include <string>
@@ -197,3 +201,5 @@ namespace shiny {
         std::array<uint64_t, 8> getDisgest() const;
     };
 }
+
+#endif

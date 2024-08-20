@@ -1,6 +1,6 @@
 #pragma once
-#ifndef SHINY_BASE_LIB
-#define SHINY_BASE_LIB 1.1
+#ifndef SHINY_BASE_H
+#define SHINY_BASE_H
 
 #include <cstddef>
 #include <cstdint>
@@ -49,4 +49,5 @@ namespace shiny {
     extern const Base &hexadecimal;
     extern const Base &HEXADECIMAL;
 }
+
 #endif

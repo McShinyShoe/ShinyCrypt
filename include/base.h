@@ -6,8 +6,13 @@
 #include <initializer_list>
 #include <string>
 #include <unordered_map>
+#include <utility>
+#include <vector>
+
+#include "sha_functions.h"
 
 namespace shiny {
+    typedef std::pair<std::vector<size_t>, size_t> Encoded;
     class Base {
       private:
         std::unordered_map<size_t, char> charMap;
@@ -17,8 +22,10 @@ namespace shiny {
         inline size_t radix() const { return charMap.size(); }
         size_t encode(char chr) const;
         size_t encode(std::string str) const;
+        Encoded encodeVec(std::string str) const;
         const char &find(size_t index) const;
         std::string decode(size_t num) const;
+        std::string decodeVec(Encoded nums) const;
         std::string decodeN(size_t num, size_t N) const;
 
         Base() = delete;

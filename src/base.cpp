@@ -4,6 +4,9 @@
 #include <string>
 #include <unordered_map>
 
+#include <cmath>
+#include <iostream>
+
 #include "../include/base.h"
 
 namespace shiny {
@@ -24,6 +27,37 @@ namespace shiny {
         return r;
     }
 
+    Encoded Base::encodeVec(std::string str) const {
+        const size_t bitCount = std::ceil(std::log2(radix()));
+        const size_t substrLen = (sizeof(size_t) * 8) / bitCount;
+        const size_t zeroPaddingCount = (sizeof(size_t) * 8) % bitCount;
+        Encoded nums = {{}, str.size() * bitCount};
+        Encoded temp = {{}, str.size() * bitCount};
+        size_t min;
+
+        for (size_t i = 0; i < str.size(); i += substrLen) {
+            std::string substr = str.substr(i, substrLen);
+            substr += std::string(substrLen - substr.size(), charMap.at(0));
+            nums.first.push_back(encode(substr));
+        };
+
+        if (zeroPaddingCount != 0) {
+            min = 0;
+            for (size_t i = 0; i < nums.first.size(); i++) {
+                if (i % 16 == 15) {
+                    min++;
+                    continue;
+                }
+                temp.first.push_back(0);
+                temp.first.back() = 0;
+                temp.first.back() |= nums.first.at(i) << (4 * (1 + ((i - min) % 15)));
+                if (i + 1 != nums.first.size()) temp.first.back() |= nums.first.at(i + 1) >> ((sizeof(size_t) * 8) - (4 * (2 + ((i - min) % 15))));
+            }
+            return temp;
+        }
+        return nums;
+    };
+
     const char &Base::find(size_t index) const {
         if (charMap.find(index) == charMap.end()) return EOF;
         return charMap.at(index);
@@ -38,6 +72,41 @@ namespace shiny {
         }
         std::reverse(r.begin(), r.end());
         return r;
+    }
+
+    std::string Base::decodeVec(Encoded nums) const {
+        std::string ret;
+        const size_t bitCount = std::ceil(std::log2(radix()));
+        const size_t substrLen = (sizeof(size_t) * 8) / bitCount;
+        const size_t zeroPaddingCount = (sizeof(size_t) * 8) % bitCount;
+        Encoded temp = {{}, nums.second};
+        size_t bits = nums.second;
+
+        if (zeroPaddingCount != 0) {
+            for (size_t i = 0; i < nums.first.size(); i++) {
+                if (i % (sizeof(size_t) * 8 / zeroPaddingCount - 1) == 0) { temp.first.push_back(nums.first.at(i) >> 4); }
+                if (i % (sizeof(size_t) * 8 / zeroPaddingCount - 1) == (sizeof(size_t) * 8 / zeroPaddingCount - 2)) {
+                    temp.first.push_back(nums.first.at(i) & BITMASK((sizeof(size_t) * 8) - zeroPaddingCount));
+                    continue;
+                };
+
+                temp.first.push_back(0);
+                temp.first.back() |= nums.first[i] << (sizeof(size_t) * 8 - zeroPaddingCount * (2 + (i % 15)));
+                temp.first.back() |= nums.first[i + 1] >> (zeroPaddingCount * (2 + (i % 15)));
+                temp.first.back() &= BITMASK((sizeof(size_t) * 8) - zeroPaddingCount);
+            }
+        }
+
+        for (size_t num : (zeroPaddingCount ? temp.first : nums.first)) {
+            if (bits / bitCount < substrLen) {
+                ret += decodeN(num, substrLen).substr(0, bits / bitCount);
+                break;
+            }
+
+            ret += decodeN(num, substrLen);
+            bits -= substrLen * bitCount;
+        };
+        return ret;
     }
 
     std::string Base::decodeN(size_t num, size_t N) const {

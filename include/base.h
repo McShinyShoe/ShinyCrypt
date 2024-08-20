@@ -32,6 +32,11 @@ namespace shiny {
     extern const Base base10;
     extern const Base base16;
     extern const Base BASE16;
+    extern const Base base32;
+    extern const Base BASE32;
+    extern const Base base64;
+    extern const Base base64url;
+    extern const Base ascii;
     extern const Base &binary;
     extern const Base &octal;
     extern const Base &decimal;

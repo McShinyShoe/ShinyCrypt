@@ -59,12 +59,12 @@ namespace shiny {
         return nums;
     };
 
-    const char &Base::find(std::size_t index) const {
+    const char &Base::find(uint64_t index) const {
         if (charMap.find(index) == charMap.end()) return EOF;
         return charMap.at(index);
     }
 
-    std::string Base::decode(std::size_t num) const {
+    std::string Base::decode(uint64_t num) const {
         if (num == 0) return std::string(1, charMap.at(0));
         std::string r;
         while (num) {
@@ -98,7 +98,7 @@ namespace shiny {
             }
         }
 
-        for (std::size_t num : (zeroPaddingCount ? temp.first : nums.first)) {
+        for (uint64_t num : (zeroPaddingCount ? temp.first : nums.first)) {
             if (bits / bitCount < substrLen) {
                 ret += decodeN(num, substrLen).substr(0, bits / bitCount);
                 break;
@@ -110,7 +110,7 @@ namespace shiny {
         return ret;
     }
 
-    std::string Base::decodeN(std::size_t num, std::size_t N) const {
+    std::string Base::decodeN(uint64_t num, std::size_t N) const {
         std::string r;
         while (N--) {
             r.push_back(charMap.at(num % radix()));
@@ -125,7 +125,7 @@ namespace shiny {
         numMap = other.numMap;
     };
 
-    Base::Base(const char *chars, std::size_t radix) {
+    Base::Base(const char *chars, uint64_t radix) {
         while (radix--) {
             charMap[radix] = chars[radix];
             numMap[chars[radix]] = radix;
@@ -133,7 +133,7 @@ namespace shiny {
     };
 
     Base::Base(const char *chars) {
-        std::size_t i = 0;
+        uint64_t i = 0;
         while (chars[i]) {
             charMap[i] = chars[i];
             numMap[chars[i]] = i;
@@ -142,7 +142,7 @@ namespace shiny {
     };
 
     Base::Base(std::initializer_list<char> list) {
-        std::size_t i = 0;
+        uint64_t i = 0;
         for (const char &chr : list) {
             charMap[i] = chr;
             numMap[chr] = i;

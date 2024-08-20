@@ -24,7 +24,7 @@ namespace shiny {
         Encoded encodeVec(std::string str) const;
         const char &find(uint64_t index) const;
         std::string decode(uint64_t num) const;
-        std::string decodeVec(Encoded nums) const;
+        std::string decodeVec(const Encoded &nums) const;
         std::string decodeN(uint64_t num, std::size_t N) const;
 
         Base() = delete;

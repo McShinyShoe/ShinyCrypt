@@ -75,7 +75,7 @@ namespace shiny {
         return r;
     }
 
-    std::string Base::decodeVec(Encoded nums) const {
+    std::string Base::decodeVec(const Encoded &nums) const {
         std::string ret;
         const std::size_t bitCount = std::ceil(std::log2(radix()));
         const std::size_t substrLen = (sizeof(std::size_t) * 8) / bitCount;

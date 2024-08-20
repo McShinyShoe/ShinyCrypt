@@ -1,10 +1,11 @@
-#include "../include/sha.h"
-#include "../include/sha_functions.h"
 #include <array>
 #include <cstddef>
 #include <cstdint>
 #include <string>
 #include <vector>
+
+#include "../include/bitmanip.h"
+#include "../include/sha.h"
 
 namespace shiny {
     void SHA0::init(std::string str) {

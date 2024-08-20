@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "../include/base.h"
+#include "../include/bitmanip.h"
 
 namespace shiny {
     size_t Base::encode(char chr) const {

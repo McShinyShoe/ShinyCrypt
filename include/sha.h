@@ -1,4 +1,3 @@
-#include "sha_functions.h"
 #include <array>
 #include <cstdint>
 #include <string>

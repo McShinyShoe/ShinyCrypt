@@ -9,8 +9,6 @@
 #include <utility>
 #include <vector>
 
-#include "sha_functions.h"
-
 namespace shiny {
     typedef std::pair<std::vector<size_t>, size_t> Encoded;
     class Base {

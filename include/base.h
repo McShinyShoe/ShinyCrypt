@@ -10,25 +10,25 @@
 #include <vector>
 
 namespace shiny {
-    typedef std::pair<std::vector<size_t>, size_t> Encoded;
+    typedef std::pair<std::vector<std::size_t>, std::size_t> Encoded;
     class Base {
       private:
-        std::unordered_map<size_t, char> charMap;
-        std::unordered_map<char, size_t> numMap;
+        std::unordered_map<std::size_t, char> charMap;
+        std::unordered_map<char, std::size_t> numMap;
 
       public:
-        inline size_t radix() const { return charMap.size(); }
-        size_t encode(char chr) const;
-        size_t encode(std::string str) const;
+        inline std::size_t radix() const { return charMap.size(); }
+        std::size_t encode(char chr) const;
+        std::size_t encode(std::string str) const;
         Encoded encodeVec(std::string str) const;
-        const char &find(size_t index) const;
-        std::string decode(size_t num) const;
+        const char &find(std::size_t index) const;
+        std::string decode(std::size_t num) const;
         std::string decodeVec(Encoded nums) const;
-        std::string decodeN(size_t num, size_t N) const;
+        std::string decodeN(std::size_t num, std::size_t N) const;
 
         Base() = delete;
         Base(const Base &other);
-        Base(const char *chars, size_t radix);
+        Base(const char *chars, std::size_t radix);
         Base(const char *chars);
         Base(std::initializer_list<char> list);
     };

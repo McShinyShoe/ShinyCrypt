@@ -11,15 +11,15 @@
 #include "../include/bitmanip.h"
 
 namespace shiny {
-    size_t Base::encode(char chr) const {
+    std::size_t Base::encode(char chr) const {
         if (numMap.find(chr) == numMap.end()) return -1;
         return numMap.at(chr);
     }
 
-    size_t Base::encode(std::string str) const {
-        size_t multiplier = 1;
-        size_t r = 0;
-        size_t t;
+    std::size_t Base::encode(std::string str) const {
+        std::size_t multiplier = 1;
+        std::size_t r = 0;
+        std::size_t t;
         for (auto it = str.rbegin(); it != str.rend(); it++) {
             if ((t = encode(*it)) == -1) return -1;
             r += t * multiplier;
@@ -29,14 +29,14 @@ namespace shiny {
     }
 
     Encoded Base::encodeVec(std::string str) const {
-        const size_t bitCount = std::ceil(std::log2(radix()));
-        const size_t substrLen = (sizeof(size_t) * 8) / bitCount;
-        const size_t zeroPaddingCount = (sizeof(size_t) * 8) % bitCount;
+        const std::size_t bitCount = std::ceil(std::log2(radix()));
+        const std::size_t substrLen = (sizeof(std::size_t) * 8) / bitCount;
+        const std::size_t zeroPaddingCount = (sizeof(std::size_t) * 8) % bitCount;
         Encoded nums = {{}, str.size() * bitCount};
         Encoded temp = {{}, str.size() * bitCount};
-        size_t min;
+        std::size_t min;
 
-        for (size_t i = 0; i < str.size(); i += substrLen) {
+        for (std::size_t i = 0; i < str.size(); i += substrLen) {
             std::string substr = str.substr(i, substrLen);
             substr += std::string(substrLen - substr.size(), charMap.at(0));
             nums.first.push_back(encode(substr));
@@ -44,7 +44,7 @@ namespace shiny {
 
         if (zeroPaddingCount != 0) {
             min = 0;
-            for (size_t i = 0; i < nums.first.size(); i++) {
+            for (std::size_t i = 0; i < nums.first.size(); i++) {
                 if (i % 16 == 15) {
                     min++;
                     continue;
@@ -52,19 +52,19 @@ namespace shiny {
                 temp.first.push_back(0);
                 temp.first.back() = 0;
                 temp.first.back() |= nums.first.at(i) << (4 * (1 + ((i - min) % 15)));
-                if (i + 1 != nums.first.size()) temp.first.back() |= nums.first.at(i + 1) >> ((sizeof(size_t) * 8) - (4 * (2 + ((i - min) % 15))));
+                if (i + 1 != nums.first.size()) temp.first.back() |= nums.first.at(i + 1) >> ((sizeof(std::size_t) * 8) - (4 * (2 + ((i - min) % 15))));
             }
             return temp;
         }
         return nums;
     };
 
-    const char &Base::find(size_t index) const {
+    const char &Base::find(std::size_t index) const {
         if (charMap.find(index) == charMap.end()) return EOF;
         return charMap.at(index);
     }
 
-    std::string Base::decode(size_t num) const {
+    std::string Base::decode(std::size_t num) const {
         if (num == 0) return std::string(1, charMap.at(0));
         std::string r;
         while (num) {
@@ -77,28 +77,28 @@ namespace shiny {
 
     std::string Base::decodeVec(Encoded nums) const {
         std::string ret;
-        const size_t bitCount = std::ceil(std::log2(radix()));
-        const size_t substrLen = (sizeof(size_t) * 8) / bitCount;
-        const size_t zeroPaddingCount = (sizeof(size_t) * 8) % bitCount;
+        const std::size_t bitCount = std::ceil(std::log2(radix()));
+        const std::size_t substrLen = (sizeof(std::size_t) * 8) / bitCount;
+        const std::size_t zeroPaddingCount = (sizeof(std::size_t) * 8) % bitCount;
         Encoded temp = {{}, nums.second};
-        size_t bits = nums.second;
+        std::size_t bits = nums.second;
 
         if (zeroPaddingCount != 0) {
-            for (size_t i = 0; i < nums.first.size(); i++) {
-                if (i % (sizeof(size_t) * 8 / zeroPaddingCount - 1) == 0) { temp.first.push_back(nums.first.at(i) >> 4); }
-                if (i % (sizeof(size_t) * 8 / zeroPaddingCount - 1) == (sizeof(size_t) * 8 / zeroPaddingCount - 2)) {
-                    temp.first.push_back(nums.first.at(i) & BITMASK((sizeof(size_t) * 8) - zeroPaddingCount));
+            for (std::size_t i = 0; i < nums.first.size(); i++) {
+                if (i % (sizeof(std::size_t) * 8 / zeroPaddingCount - 1) == 0) { temp.first.push_back(nums.first.at(i) >> 4); }
+                if (i % (sizeof(std::size_t) * 8 / zeroPaddingCount - 1) == (sizeof(std::size_t) * 8 / zeroPaddingCount - 2)) {
+                    temp.first.push_back(nums.first.at(i) & BITMASK((sizeof(std::size_t) * 8) - zeroPaddingCount));
                     continue;
                 };
 
                 temp.first.push_back(0);
-                temp.first.back() |= nums.first[i] << (sizeof(size_t) * 8 - zeroPaddingCount * (2 + (i % 15)));
+                temp.first.back() |= nums.first[i] << (sizeof(std::size_t) * 8 - zeroPaddingCount * (2 + (i % 15)));
                 temp.first.back() |= nums.first[i + 1] >> (zeroPaddingCount * (2 + (i % 15)));
-                temp.first.back() &= BITMASK((sizeof(size_t) * 8) - zeroPaddingCount);
+                temp.first.back() &= BITMASK((sizeof(std::size_t) * 8) - zeroPaddingCount);
             }
         }
 
-        for (size_t num : (zeroPaddingCount ? temp.first : nums.first)) {
+        for (std::size_t num : (zeroPaddingCount ? temp.first : nums.first)) {
             if (bits / bitCount < substrLen) {
                 ret += decodeN(num, substrLen).substr(0, bits / bitCount);
                 break;
@@ -110,7 +110,7 @@ namespace shiny {
         return ret;
     }
 
-    std::string Base::decodeN(size_t num, size_t N) const {
+    std::string Base::decodeN(std::size_t num, std::size_t N) const {
         std::string r;
         while (N--) {
             r.push_back(charMap.at(num % radix()));
@@ -125,7 +125,7 @@ namespace shiny {
         numMap = other.numMap;
     };
 
-    Base::Base(const char *chars, size_t radix) {
+    Base::Base(const char *chars, std::size_t radix) {
         while (radix--) {
             charMap[radix] = chars[radix];
             numMap[chars[radix]] = radix;
@@ -133,7 +133,7 @@ namespace shiny {
     };
 
     Base::Base(const char *chars) {
-        size_t i = 0;
+        std::size_t i = 0;
         while (chars[i]) {
             charMap[i] = chars[i];
             numMap[chars[i]] = i;
@@ -142,7 +142,7 @@ namespace shiny {
     };
 
     Base::Base(std::initializer_list<char> list) {
-        size_t i = 0;
+        std::size_t i = 0;
         for (const char &chr : list) {
             charMap[i] = chr;
             numMap[chr] = i;
@@ -163,7 +163,7 @@ namespace shiny {
                       (char)13,  (char)14,  (char)15,  (char)16,  (char)17,  (char)18,  (char)19,  (char)20,  (char)21,  (char)22,  (char)23,  (char)24,  (char)25,
                       (char)26,  (char)27,  (char)28,  (char)29,  (char)30,  (char)31,  (char)32,  (char)33,  (char)34,  (char)35,  (char)36,  (char)37,  (char)38,
                       (char)39,  (char)40,  (char)41,  (char)42,  (char)43,  (char)44,  (char)45,  (char)46,  (char)47,  (char)48,  (char)49,  (char)50,  (char)51,
-                      (char)52,  (char)53,  (char)54,  (char)55,  (char)56,  (char)57,  (char)58,  (char)59,  (char)60,  (char)61,  (char)62,  (char)63,  (char)(sizeof(size_t) * 8),
+                      (char)52,  (char)53,  (char)54,  (char)55,  (char)56,  (char)57,  (char)58,  (char)59,  (char)60,  (char)61,  (char)62,  (char)63,  (char)(sizeof(std::size_t) * 8),
                       (char)65,  (char)66,  (char)67,  (char)68,  (char)69,  (char)70,  (char)71,  (char)72,  (char)73,  (char)74,  (char)75,  (char)76,  (char)77,
                       (char)78,  (char)79,  (char)80,  (char)81,  (char)82,  (char)83,  (char)84,  (char)85,  (char)86,  (char)87,  (char)88,  (char)89,  (char)90,
                       (char)91,  (char)92,  (char)93,  (char)94,  (char)95,  (char)96,  (char)97,  (char)98,  (char)99,  (char)100, (char)101, (char)102, (char)103,

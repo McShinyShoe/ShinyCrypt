@@ -8,14 +8,14 @@ namespace shiny {
       public:
         static constexpr uint32_t stateInitial[5] = {0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0};
         struct {
-            inline uint32_t operator[](const size_t index) const {
+            inline uint32_t operator[](const std::size_t index) const {
                 static constexpr uint32_t constant[4] = {0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6};
                 return constant[index / 20];
             }
         } static constexpr constant = {};
 
       public:
-        template <typename T> inline T F(T x, T y, T z, size_t t) {
+        template <typename T> inline T F(T x, T y, T z, std::size_t t) {
             switch (t / 20) {
             case 0:
                 return CHOICE(x, y, z);
@@ -43,7 +43,7 @@ namespace shiny {
       public:
         inline static constexpr uint32_t stateInitial[5] = {0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0};
         struct {
-            inline uint32_t operator[](const size_t index) const {
+            inline uint32_t operator[](const std::size_t index) const {
                 switch (index / 20) {
                 case 0:
                     return 0x5a827999;
@@ -60,7 +60,7 @@ namespace shiny {
         } static constexpr constant = {};
 
       public:
-        template <typename T> inline T F(T x, T y, T z, size_t t) {
+        template <typename T> inline T F(T x, T y, T z, std::size_t t) {
             switch (t / 20) {
             case 0:
                 return CHOICE(x, y, z);

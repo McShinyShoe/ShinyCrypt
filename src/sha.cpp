@@ -9,10 +9,10 @@
 
 namespace shiny {
     void SHA0::init(std::string str) {
-        size_t strSize = str.size() * 8;
-        const size_t totalSize = (strSize + 1 + 64);
-        const size_t paddingSize = (512 - (totalSize % 512)) % 512;
-        const size_t blockSize = (totalSize + paddingSize) / 512;
+        std::size_t strSize = str.size() * 8;
+        const std::size_t totalSize = (strSize + 1 + 64);
+        const std::size_t paddingSize = (512 - (totalSize % 512)) % 512;
+        const std::size_t blockSize = (totalSize + paddingSize) / 512;
 
         blocks.resize(blockSize);
         hashes.resize(blockSize);
@@ -27,8 +27,8 @@ namespace shiny {
         blocks[blockSize - 1][15] = strSize;
     };
     void SHA0::compute() {
-        for (size_t i = 0; i < blocks.size(); i++) {
-            size_t j;
+        for (std::size_t i = 0; i < blocks.size(); i++) {
+            std::size_t j;
             for (j = 16; j < 80; j++) blocks[i][j] = blocks[i][j - 3] ^ blocks[i][j - 8] ^ blocks[i][j - 14] ^ blocks[i][j - 16];
 
             for (j = 0; j < 5; j++) hashes[i][j] = i == 0 ? stateInitial[j] : hashes[i - 1][j];
@@ -51,10 +51,10 @@ namespace shiny {
         return r;
     }
     void SHA1::init(std::string str) {
-        size_t strSize = str.size() * 8;
-        const size_t totalSize = (strSize + 1 + 64);
-        const size_t paddingSize = (512 - (totalSize % 512)) % 512;
-        const size_t blockSize = (totalSize + paddingSize) / 512;
+        std::size_t strSize = str.size() * 8;
+        const std::size_t totalSize = (strSize + 1 + 64);
+        const std::size_t paddingSize = (512 - (totalSize % 512)) % 512;
+        const std::size_t blockSize = (totalSize + paddingSize) / 512;
 
         blocks.resize(blockSize);
         hashes.resize(blockSize);
@@ -69,8 +69,8 @@ namespace shiny {
         blocks[blockSize - 1][15] = strSize;
     };
     void SHA1::compute() {
-        for (size_t i = 0; i < blocks.size(); i++) {
-            size_t j;
+        for (std::size_t i = 0; i < blocks.size(); i++) {
+            std::size_t j;
             for (j = 16; j < 80; j++) blocks[i][j] = ROTL(blocks[i][j - 3] ^ blocks[i][j - 8] ^ blocks[i][j - 14] ^ blocks[i][j - 16], 1);
 
             for (j = 0; j < 5; j++) hashes[i][j] = i == 0 ? stateInitial[j] : hashes[i - 1][j];
@@ -93,10 +93,10 @@ namespace shiny {
         return r;
     }
     void SHA224::init(std::string str) {
-        size_t strSize = str.size() * 8;
-        const size_t totalSize = (strSize + 1 + 64);
-        const size_t paddingSize = (512 - (totalSize % 512)) % 512;
-        const size_t blockSize = (totalSize + paddingSize) / 512;
+        std::size_t strSize = str.size() * 8;
+        const std::size_t totalSize = (strSize + 1 + 64);
+        const std::size_t paddingSize = (512 - (totalSize % 512)) % 512;
+        const std::size_t blockSize = (totalSize + paddingSize) / 512;
 
         blocks.resize(blockSize);
         hashes.resize(blockSize);
@@ -111,8 +111,8 @@ namespace shiny {
         blocks[blockSize - 1][15] = strSize;
     };
     void SHA224::compute() {
-        for (size_t i = 0; i < blocks.size(); i++) {
-            size_t j;
+        for (std::size_t i = 0; i < blocks.size(); i++) {
+            std::size_t j;
             for (j = 16; j < 64; j++) blocks[i][j] = LOWERCASE_SIGMA1(blocks[i][j - 2]) + blocks[i][j - 7] + LOWERCASE_SIGMA0(blocks[i][j - 15]) + blocks[i][j - 16];
 
             for (j = 0; j < 8; j++) hashes[i][j] = i == 0 ? stateInitial[j] : hashes[i - 1][j];
@@ -139,10 +139,10 @@ namespace shiny {
         return r;
     }
     void SHA256::init(std::string str) {
-        size_t strSize = str.size() * 8;
-        const size_t totalSize = (strSize + 1 + 64);
-        const size_t paddingSize = (512 - (totalSize % 512)) % 512;
-        const size_t blockSize = (totalSize + paddingSize) / 512;
+        std::size_t strSize = str.size() * 8;
+        const std::size_t totalSize = (strSize + 1 + 64);
+        const std::size_t paddingSize = (512 - (totalSize % 512)) % 512;
+        const std::size_t blockSize = (totalSize + paddingSize) / 512;
 
         blocks.resize(blockSize);
         hashes.resize(blockSize);
@@ -157,8 +157,8 @@ namespace shiny {
         blocks[blockSize - 1][15] = strSize;
     };
     void SHA256::compute() {
-        for (size_t i = 0; i < blocks.size(); i++) {
-            size_t j;
+        for (std::size_t i = 0; i < blocks.size(); i++) {
+            std::size_t j;
             for (j = 16; j < 64; j++) blocks[i][j] = LOWERCASE_SIGMA1(blocks[i][j - 2]) + blocks[i][j - 7] + LOWERCASE_SIGMA0(blocks[i][j - 15]) + blocks[i][j - 16];
 
             for (j = 0; j < 8; j++) hashes[i][j] = i == 0 ? stateInitial[j] : hashes[i - 1][j];
@@ -185,10 +185,10 @@ namespace shiny {
         return r;
     }
     void SHA384::init(std::string str) {
-        size_t strSize = str.size() * 8;
-        const size_t totalSize = (strSize + 1 + 128);
-        const size_t paddingSize = (1024 - (totalSize % 1024)) % 1024;
-        const size_t blockSize = (totalSize + paddingSize) / 1024;
+        std::size_t strSize = str.size() * 8;
+        const std::size_t totalSize = (strSize + 1 + 128);
+        const std::size_t paddingSize = (1024 - (totalSize % 1024)) % 1024;
+        const std::size_t blockSize = (totalSize + paddingSize) / 1024;
 
         blocks.resize(blockSize);
         hashes.resize(blockSize);
@@ -203,8 +203,8 @@ namespace shiny {
         blocks[blockSize - 1][15] = strSize;
     };
     void SHA384::compute() {
-        for (size_t i = 0; i < blocks.size(); i++) {
-            size_t j;
+        for (std::size_t i = 0; i < blocks.size(); i++) {
+            std::size_t j;
             for (j = 16; j < 80; j++) blocks[i][j] = LOWERCASE_SIGMA1(blocks[i][j - 2]) + blocks[i][j - 7] + LOWERCASE_SIGMA0(blocks[i][j - 15]) + blocks[i][j - 16];
 
             for (j = 0; j < 8; j++) hashes[i][j] = i == 0 ? stateInitial[j] : hashes[i - 1][j];
@@ -231,10 +231,10 @@ namespace shiny {
         return r;
     }
     void SHA512::init(std::string str) {
-        size_t strSize = str.size() * 8;
-        const size_t totalSize = (strSize + 1 + 128);
-        const size_t paddingSize = (1024 - (totalSize % 1024)) % 1024;
-        const size_t blockSize = (totalSize + paddingSize) / 1024;
+        std::size_t strSize = str.size() * 8;
+        const std::size_t totalSize = (strSize + 1 + 128);
+        const std::size_t paddingSize = (1024 - (totalSize % 1024)) % 1024;
+        const std::size_t blockSize = (totalSize + paddingSize) / 1024;
 
         blocks.resize(blockSize);
         hashes.resize(blockSize);
@@ -249,8 +249,8 @@ namespace shiny {
         blocks[blockSize - 1][15] = strSize;
     };
     void SHA512::compute() {
-        for (size_t i = 0; i < blocks.size(); i++) {
-            size_t j;
+        for (std::size_t i = 0; i < blocks.size(); i++) {
+            std::size_t j;
             for (j = 16; j < 80; j++) blocks[i][j] = LOWERCASE_SIGMA1(blocks[i][j - 2]) + blocks[i][j - 7] + LOWERCASE_SIGMA0(blocks[i][j - 15]) + blocks[i][j - 16];
 
             for (j = 0; j < 8; j++) hashes[i][j] = i == 0 ? stateInitial[j] : hashes[i - 1][j];

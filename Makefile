@@ -16,6 +16,7 @@ LIB = base.a sha.a md.a
 
 all: build
 	$(MAKE) -C $(BUILD_DIR) all
+	mkdir -p $(BIN_DIR)
 	mv $(BUILD_DIR)/*.a $(BIN_DIR)/
 
 build:
@@ -24,6 +25,7 @@ build:
 
 clean:
 	rm -rf $(BUILD_DIR)
+	rm -rf $(BIN_DIR)
 
 test: all
 	cp $(BIN_DIR)/* $(TEST_DIR)

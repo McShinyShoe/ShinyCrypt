@@ -10,7 +10,7 @@ BUILD_DIR = build
 TEST_DIR = test
 BIN_DIR = bin
 TEST_SRC = example/test.cpp
-LIB = base.a sha.a
+LIB = base.a sha.a md.a
 
 .PHONY: all build clean test
 

@@ -1,5 +1,6 @@
 #include <base.h>
 #include <iostream>
+#include <md.h>
 #include <sha.h>
 
 using namespace std;
@@ -48,6 +49,13 @@ int main(int argc, const char *argv[]) {
     sha512.compute();
     cout << "SHA512: ";
     for (auto h : sha512.getDisgest()) cout << hexadecimal.decodeN(h, sizeof(h) * 2);
+    cout << endl;
+
+    MD2 md;
+    md.init(str);
+    md.compute();
+    cout << "MD2: ";
+    for (auto h : md.getDisgest()) cout << hexadecimal.decodeN(h, sizeof(h) * 2);
     cout << endl;
 
     return 0;

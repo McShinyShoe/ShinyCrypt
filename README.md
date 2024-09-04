@@ -9,3 +9,6 @@ A collection of cryptographic functions written in C++
 
 ### Base
 - [**RFC 3548**](https://datatracker.ietf.org/doc/html/rfc3548). The Base16, Base32, and Base64 Data Encodings
+
+### MD
+- [**RFC 1319**](https://datatracker.ietf.org/doc/html/rfc1319). The MD2 Message-Digest Algorithm
